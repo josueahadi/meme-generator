@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import memesData from "@/memesData";
 import {
@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import DownloadButton from "./DownloadButton";
 import "./Meme.css";
 
 interface MemeFormData {
@@ -30,7 +31,9 @@ const Meme: React.FC = () => {
   const [topText, setTopText] = useState<string>("");
   const [bottomText, setBottomText] = useState<string>("");
 
-  const onSubmit: SubmitHandler<MemeFormData> = (data) => {
+  const memeRef = useRef<HTMLDivElement>(null);
+
+  const onSubmit = (data: MemeFormData) => {
     setTopText(data.topText);
     setBottomText(data.bottomText);
   };
@@ -114,7 +117,10 @@ const Meme: React.FC = () => {
           </Button>
         </form>
       </Form>
-      <div className="w-full sm:w-[30rem] relative flex justify-center">
+      <div
+        className="w-full sm:w-[30rem] relative flex justify-center"
+        ref={memeRef}
+      >
         {memeImageUrl && (
           <>
             <img src={memeImageUrl} alt="Random Meme" className="" />
@@ -127,6 +133,7 @@ const Meme: React.FC = () => {
           </>
         )}
       </div>
+      {memeImageUrl && <DownloadButton memeRef={memeRef} />}
     </main>
   );
 };
