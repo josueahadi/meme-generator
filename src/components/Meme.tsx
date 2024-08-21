@@ -77,14 +77,15 @@ const Meme: React.FC = () => {
             )}
           />
           <Button
-            type="submit"
+            type="button"
+            onClick={getRandomMemeImage}
             className="col-span-2 bg-[#672280] hover:bg-[#A626D3] font-semibold text-white text-base"
           >
             Get a new meme image
           </Button>
         </form>
       </Form>
-      <div>Random meme image</div>
+      <div>{memeImageUrl && <img src={memeImageUrl} alt="Random Meme" />}</div>
     </main>
   );
 };
