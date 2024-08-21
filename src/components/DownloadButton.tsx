@@ -22,7 +22,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ memeRef }) => {
   return (
     <button
       onClick={downloadMeme}
-      className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      className="mt-4 bg-[#A818DA] hover:bg-[#711F8D] text-white text-sm font-bold py-2 px-4 rounded-md"
     >
       Download Meme
     </button>

@@ -30,6 +30,7 @@ const Meme: React.FC = () => {
   const [memeImageUrl, setMemeImageUrl] = useState<string>("");
   const [topText, setTopText] = useState<string>("");
   const [bottomText, setBottomText] = useState<string>("");
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
   const memeRef = useRef<HTMLDivElement>(null);
 
@@ -61,6 +62,11 @@ const Meme: React.FC = () => {
     const randomIndex: number = Math.floor(Math.random() * memes.length);
     const randomMemeImageUrl: string = memes[randomIndex].url;
     setMemeImageUrl(randomMemeImageUrl);
+    setImageLoaded(false); // Reset image loaded state
+  };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
   };
 
   return (
@@ -123,7 +129,12 @@ const Meme: React.FC = () => {
       >
         {memeImageUrl && (
           <>
-            <img src={memeImageUrl} alt="Random Meme" className="" />
+            <img
+              src={memeImageUrl}
+              alt="Random Meme"
+              onLoad={handleImageLoad}
+              className=""
+            />
             <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-3xl font-regular z-50 text-center impact-font text-stroke">
               {topText}
             </h1>
@@ -133,7 +144,7 @@ const Meme: React.FC = () => {
           </>
         )}
       </div>
-      {memeImageUrl && <DownloadButton memeRef={memeRef} />}
+      {imageLoaded && <DownloadButton memeRef={memeRef} />}
     </main>
   );
 };
