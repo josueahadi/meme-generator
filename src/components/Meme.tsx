@@ -117,7 +117,7 @@ const Meme: React.FC = () => {
           <Button
             type="submit"
             onClick={getRandomMemeImage}
-            className="col-span-2 bg-[#672280] hover:bg-[#A626D3] font-semibold text-white text-base"
+            className="col-span-2 bg-[#A818DA] hover:bg-[#711F8D] font-bold text-white text-base"
           >
             Get a new meme image
           </Button>
