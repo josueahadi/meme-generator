@@ -135,10 +135,10 @@ const Meme: React.FC = () => {
               onLoad={handleImageLoad}
               className=""
             />
-            <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-3xl font-regular z-50 text-center impact-font text-stroke">
+            <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
               {topText}
             </h1>
-            <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-3xl font-regular z-50 text-center impact-font text-stroke">
+            <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
               {bottomText}
             </h1>
           </>
