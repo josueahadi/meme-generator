@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import memesData from "@/memesData";
 import {
@@ -13,8 +13,13 @@ import {
 import { Input } from "@/components/ui/input";
 import "./Meme.css";
 
+interface MemeFormData {
+  topText: string;
+  bottomText: string;
+}
+
 const Meme: React.FC = () => {
-  const form = useForm({
+  const form = useForm<MemeFormData>({
     defaultValues: {
       topText: "",
       bottomText: "",
@@ -25,7 +30,7 @@ const Meme: React.FC = () => {
   const [topText, setTopText] = useState<string>("");
   const [bottomText, setBottomText] = useState<string>("");
 
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<MemeFormData> = (data) => {
     setTopText(data.topText);
     setBottomText(data.bottomText);
   };
