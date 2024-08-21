@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "Impact";
+  src: url("https://fonts.cdnfonts.com/s/17418/Impact.woff") format("woff");
+}
+
+.impact-font {
+  font-family: "Impact", sans-serif;
+}
+
+.text-stroke {
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+    2px 2px 0 #000;
+}

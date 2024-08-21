@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import "./Meme.css";
 
 const Meme: React.FC = () => {
   const form = useForm({
@@ -21,9 +22,12 @@ const Meme: React.FC = () => {
   });
 
   const [memeImageUrl, setMemeImageUrl] = useState<string>("");
+  const [topText, setTopText] = useState<string>("");
+  const [bottomText, setBottomText] = useState<string>("");
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    setTopText(data.topText);
+    setBottomText(data.bottomText);
   };
 
   const memes: {
@@ -77,7 +81,7 @@ const Meme: React.FC = () => {
             )}
           />
           <Button
-            type="button"
+            type="submit"
             onClick={getRandomMemeImage}
             className="col-span-2 bg-[#672280] hover:bg-[#A626D3] font-semibold text-white text-base"
           >
@@ -85,7 +89,19 @@ const Meme: React.FC = () => {
           </Button>
         </form>
       </Form>
-      <div>{memeImageUrl && <img src={memeImageUrl} alt="Random Meme" />}</div>
+      <div className="w-full sm:w-[30rem] relative flex justify-center">
+        {memeImageUrl && (
+          <>
+            <img src={memeImageUrl} alt="Random Meme" className="" />
+            <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-3xl font-regular z-50 text-center impact-font text-stroke">
+              {topText}
+            </h1>
+            <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-3xl font-regular z-50 text-center impact-font text-stroke">
+              {bottomText}
+            </h1>
+          </>
+        )}
+      </div>
     </main>
   );
 };
