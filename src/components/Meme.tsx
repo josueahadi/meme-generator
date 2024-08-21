@@ -30,6 +30,16 @@ const Meme: React.FC = () => {
     setBottomText(data.bottomText);
   };
 
+  const handleTopTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTopText(event.target.value);
+  };
+
+  const handleBottomTextChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setBottomText(event.target.value);
+  };
+
   const memes: {
     id: string;
     name: string;
@@ -50,7 +60,7 @@ const Meme: React.FC = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className=" w-full sm:w-auto grid grid-cols-2 grid-rows-2 gap-8"
+          className=" w-full sm:w-auto grid grid-cols-2 grid-rows-2 gap-4 sm:gap-8"
         >
           <FormField
             control={form.control}
@@ -59,7 +69,12 @@ const Meme: React.FC = () => {
               <FormItem className="w-full sm:w-56">
                 <FormLabel className="font-medium text-sm">Top text</FormLabel>
                 <FormControl>
-                  <Input placeholder="Shut up" {...field} />
+                  <Input
+                    placeholder="Add your text"
+                    {...field}
+                    value={topText}
+                    onChange={handleTopTextChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -74,7 +89,12 @@ const Meme: React.FC = () => {
                   Bottom text
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="And take my money" {...field} />
+                  <Input
+                    placeholder="Add your text"
+                    {...field}
+                    value={bottomText}
+                    onChange={handleBottomTextChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
