@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import memesData from "@/memesData";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,12 +20,29 @@ const Meme: React.FC = () => {
     },
   });
 
+  const [memeImageUrl, setMemeImageUrl] = useState<string>("");
+
   const onSubmit = (data: any) => {
     console.log(data);
   };
 
+  const memes: {
+    id: string;
+    name: string;
+    url: string;
+    width: number;
+    height: number;
+    box_count: number;
+  }[] = memesData.data.memes;
+
+  const getRandomMemeImage = () => {
+    const randomIndex: number = Math.floor(Math.random() * memes.length);
+    const randomMemeImageUrl: string = memes[randomIndex].url;
+    setMemeImageUrl(randomMemeImageUrl);
+  };
+
   return (
-    <main className="flex items-center justify-center py-10 px-6">
+    <main className="flex flex-col items-center justify-center py-10 px-6">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -37,12 +55,8 @@ const Meme: React.FC = () => {
               <FormItem className="w-full sm:w-56">
                 <FormLabel className="font-medium text-sm">Top text</FormLabel>
                 <FormControl>
-                  <Input placeholder="Add text" {...field} />
+                  <Input placeholder="Shut up" {...field} />
                 </FormControl>
-                {/* <FormDescription>
-                    This is the text that will be displayed at the top of the
-                    image.
-                  </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -56,12 +70,8 @@ const Meme: React.FC = () => {
                   Bottom text
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Add text" {...field} />
+                  <Input placeholder="And take my money" {...field} />
                 </FormControl>
-                {/* <FormDescription>
-                    This is the text that will be displayed at the bottom of the
-                    image.
-                  </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -74,6 +84,7 @@ const Meme: React.FC = () => {
           </Button>
         </form>
       </Form>
+      <div>Random meme image</div>
     </main>
   );
 };
