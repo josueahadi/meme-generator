@@ -130,7 +130,7 @@ const Meme: React.FC = () => {
         </form>
       </Form>
       <div
-        className="w-full sm:w-[30rem] relative flex justify-center"
+        className="w-full sm:w-[25rem] relative flex justify-center"
         ref={memeRef}
       >
         {memeImageUrl && (
