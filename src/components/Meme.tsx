@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import memesData from "@/memesData";
@@ -27,7 +27,23 @@ const Meme: React.FC = () => {
     },
   });
 
-  const [memeImageUrl, setMemeImageUrl] = useState<string>("");
+  const memes: {
+    id: string;
+    name: string;
+    url: string;
+    width: number;
+    height: number;
+    box_count: number;
+  }[] = memesData.data.memes;
+
+  const getRandomMemeImageUrl = () => {
+    const randomIndex: number = Math.floor(Math.random() * memes.length);
+    return memes[randomIndex].url;
+  };
+
+  const [memeImageUrl, setMemeImageUrl] = useState<string>(
+    getRandomMemeImageUrl()
+  );
   const [topText, setTopText] = useState<string>("");
   const [bottomText, setBottomText] = useState<string>("");
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
@@ -49,18 +65,8 @@ const Meme: React.FC = () => {
     setBottomText(event.target.value);
   };
 
-  const memes: {
-    id: string;
-    name: string;
-    url: string;
-    width: number;
-    height: number;
-    box_count: number;
-  }[] = memesData.data.memes;
-
   const getRandomMemeImage = () => {
-    const randomIndex: number = Math.floor(Math.random() * memes.length);
-    const randomMemeImageUrl: string = memes[randomIndex].url;
+    const randomMemeImageUrl: string = getRandomMemeImageUrl();
     setMemeImageUrl(randomMemeImageUrl);
     setImageLoaded(false); // Reset image loaded state
   };
