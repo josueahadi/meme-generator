@@ -130,7 +130,7 @@ const Meme: React.FC = () => {
         </form>
       </Form>
       <div
-        className="w-full sm:w-[25rem] relative flex justify-center"
+        className="w-full sm:w-[30rem] relative flex justify-center"
         ref={memeRef}
       >
         {memeImageUrl && (
@@ -141,12 +141,16 @@ const Meme: React.FC = () => {
               onLoad={handleImageLoad}
               className=""
             />
-            <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
-              {topText}
-            </h1>
-            <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
-              {bottomText}
-            </h1>
+            {imageLoaded && (
+              <>
+                <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
+                  {topText}
+                </h1>
+                <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
+                  {bottomText}
+                </h1>
+              </>
+            )}
           </>
         )}
       </div>
