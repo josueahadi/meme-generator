@@ -44,8 +44,8 @@ const Meme: React.FC = () => {
   const [memeImageUrl, setMemeImageUrl] = useState<string>(
     getRandomMemeImageUrl()
   );
-  const [topText, setTopText] = useState<string>("");
-  const [bottomText, setBottomText] = useState<string>("");
+  const [topText, setTopText] = useState<string>("Shut Up");
+  const [bottomText, setBottomText] = useState<string>("And Take My Money");
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
   const memeRef = useRef<HTMLDivElement>(null);
