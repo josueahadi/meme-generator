@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import DownloadButton from "./DownloadButton";
 import "./Meme.css";
 
-interface Meme {
+interface MemesData {
   id: string;
   name: string;
   url: string;
@@ -13,15 +13,20 @@ interface Meme {
   height: number;
   box_count: number;
 }
+interface Meme {
+  topText: string;
+  bottomText: string;
+  memeImageUrl: string;
+}
 
 const Meme: React.FC = () => {
-  const memes: Meme[] = memesData.data.memes;
+  const memes: MemesData[] = memesData.data.memes;
 
-  const [memeImageUrl, setMemeImageUrl] = useState<string>(
-    "https://i.imgflip.com/3si4.jpg"
-  );
-  const [topText, setTopText] = useState<string>("Shut Up");
-  const [bottomText, setBottomText] = useState<string>("And Take My Money");
+  const [meme, setMeme] = useState<Meme>({
+    topText: "Shut Up",
+    bottomText: "And Take My Money Fry",
+    memeImageUrl: "https://i.imgflip.com/3si4.jpg",
+  });
 
   const memeRef = useRef<HTMLDivElement>(null);
 
@@ -29,16 +34,19 @@ const Meme: React.FC = () => {
     (field: "topText" | "bottomText") =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (field === "topText") {
-        setTopText(event.target.value);
+        setMeme((prevMeme) => ({ ...prevMeme, topText: event.target.value }));
       } else {
-        setBottomText(event.target.value);
+        setMeme((prevMeme) => ({
+          ...prevMeme,
+          bottomText: event.target.value,
+        }));
       }
     };
 
   const getRandomMemeImage = () => {
     const randomIndex: number = Math.floor(Math.random() * memes.length);
     const url: string = memes[randomIndex].url;
-    setMemeImageUrl(url);
+    setMeme((prevMeme) => ({ ...prevMeme, memeImageUrl: url }));
   };
 
   return (
@@ -48,7 +56,7 @@ const Meme: React.FC = () => {
           <label className="font-medium text-sm">Top text</label>
           <Input
             placeholder="Add your text"
-            value={topText}
+            value={meme.topText}
             onChange={handleTextChange("topText")}
           />
         </div>
@@ -56,7 +64,7 @@ const Meme: React.FC = () => {
           <label className="font-medium text-sm">Bottom text</label>
           <Input
             placeholder="Add your text"
-            value={bottomText}
+            value={meme.bottomText}
             onChange={handleTextChange("bottomText")}
           />
         </div>
@@ -71,14 +79,14 @@ const Meme: React.FC = () => {
         className="w-full sm:w-[30rem] relative flex justify-center"
         ref={memeRef}
       >
-        {memeImageUrl && (
+        {meme.memeImageUrl && (
           <>
-            <img src={memeImageUrl} alt="Random Meme" className="" />
+            <img src={meme.memeImageUrl} alt="Random Meme" className="" />
             <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
-              {topText}
+              {meme.topText}
             </h1>
             <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
-              {bottomText}
+              {meme.bottomText}
             </h1>
           </>
         )}
