@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import memesData from "@/memesData";
+// import memesData from "@/memesData";
 import { Input } from "@/components/ui/input";
 import DownloadButton from "./DownloadButton";
 import "./Meme.css";
@@ -12,7 +12,9 @@ interface MemesData {
   width: number;
   height: number;
   box_count: number;
+  captions: number;
 }
+
 interface Meme {
   topText: string;
   bottomText: string;
@@ -20,13 +22,19 @@ interface Meme {
 }
 
 const Meme: React.FC = () => {
-  const memes: MemesData[] = memesData.data.memes;
-
   const [meme, setMeme] = useState<Meme>({
-    topText: "Shut Up",
-    bottomText: "And Take My Money Fry",
-    memeImageUrl: "https://i.imgflip.com/3si4.jpg",
+    topText: "",
+    bottomText: "",
+    memeImageUrl: "https://i.imgflip.com/23ls.jpg",
   });
+
+  const [allMemes, setAllMemes] = useState<MemesData[]>([]);
+
+  useEffect(() => {
+    fetch("https://api.imgflip.com/get_memes")
+      .then((response) => response.json())
+      .then((data) => setAllMemes(data));
+  }, [meme]);
 
   const memeRef = useRef<HTMLDivElement>(null);
 
@@ -43,9 +51,11 @@ const Meme: React.FC = () => {
       }
     };
 
-  const getRandomMemeImage = () => {
-    const randomIndex: number = Math.floor(Math.random() * memes.length);
-    const url: string = memes[randomIndex].url;
+  const getMemeImage = () => {
+    const memesArray: MemesData[] = allMemes.data.memes;
+    console.log(memesArray);
+    const randomIndex: number = Math.floor(Math.random() * memesArray.length);
+    const url: string = memesArray[randomIndex].url;
     setMeme((prevMeme) => ({ ...prevMeme, memeImageUrl: url }));
   };
 
@@ -69,7 +79,7 @@ const Meme: React.FC = () => {
           />
         </div>
         <Button
-          onClick={getRandomMemeImage}
+          onClick={getMemeImage}
           className="col-span-2 bg-[#A818DA] hover:bg-[#711F8D] font-bold text-white text-base"
         >
           Get a new meme image
