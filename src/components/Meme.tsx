@@ -30,10 +30,18 @@ const Meme: React.FC = () => {
   const [allMemes, setAllMemes] = useState<MemesData[]>([]);
 
   useEffect(() => {
-    fetch("https://api.imgflip.com/get_memes")
-      .then((response) => response.json())
-      .then((data) => setAllMemes(data.data.memes));
-  }, [meme]);
+    const fetchMemes = async () => {
+      try {
+        const response = await fetch("https://api.imgflip.com/get_memes");
+        const data = await response.json();
+        setAllMemes(data.data.memes);
+      } catch (error) {
+        console.error("Error fetching memes:", error);
+      }
+    };
+  
+    fetchMemes();
+  }, []);
 
   const memeRef = useRef<HTMLDivElement>(null);
 
