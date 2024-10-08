@@ -30,3 +30,16 @@ A simple React-based meme generator that allows users to add custom text to meme
    ```bash
    git clone https://github.com/your-username/meme-generator.git
    ```
+2. 
+   ```bash
+   cd meme-generator
+   ```
+
+3. Install dependencies
+   ```bash
+   npm install
+   ```
+4.
+   ```bash
+   npm run dev
+   ```
