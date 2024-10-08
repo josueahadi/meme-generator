@@ -1,6 +1,6 @@
 # Meme Generator
 
-A simple React-based meme generator that allows users to add custom text to random meme images.
+A simple React-based meme generator that allows users to add custom text to meme images from an API.
 
 ## Features
 
