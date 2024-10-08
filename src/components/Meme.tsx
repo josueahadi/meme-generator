@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-// import memesData from "@/memesData";
 import { Input } from "@/components/ui/input";
 import DownloadButton from "./DownloadButton";
 import "./Meme.css";
@@ -33,7 +32,7 @@ const Meme: React.FC = () => {
   useEffect(() => {
     fetch("https://api.imgflip.com/get_memes")
       .then((response) => response.json())
-      .then((data) => setAllMemes(data));
+      .then((data) => setAllMemes(data.data.memes));
   }, [meme]);
 
   const memeRef = useRef<HTMLDivElement>(null);
@@ -52,10 +51,8 @@ const Meme: React.FC = () => {
     };
 
   const getMemeImage = () => {
-    const memesArray: MemesData[] = allMemes.data.memes;
-    console.log(memesArray);
-    const randomIndex: number = Math.floor(Math.random() * memesArray.length);
-    const url: string = memesArray[randomIndex].url;
+    const randomIndex: number = Math.floor(Math.random() * allMemes.length);
+    const url: string = allMemes[randomIndex].url;
     setMeme((prevMeme) => ({ ...prevMeme, memeImageUrl: url }));
   };
 
@@ -92,10 +89,10 @@ const Meme: React.FC = () => {
         {meme.memeImageUrl && (
           <>
             <img src={meme.memeImageUrl} alt="Random Meme" className="" />
-            <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
+            <h1 className="absolute top-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-2xl font-regular z-50 text-center impact-font text-stroke">
               {meme.topText}
             </h1>
-            <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-xl font-regular z-50 text-center impact-font text-stroke">
+            <h1 className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white uppercase shadow-black text-2xl font-regular z-50 text-center impact-font text-stroke">
               {meme.bottomText}
             </h1>
           </>
