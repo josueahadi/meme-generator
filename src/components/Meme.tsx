@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Upload } from "lucide-react";
 import DownloadButton from "./DownloadButton";
 import "./Meme.css";
 
@@ -28,6 +29,8 @@ const Meme: React.FC = () => {
   });
 
   const [allMemes, setAllMemes] = useState<MemesData[]>([]);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchMemes = async () => {
@@ -42,6 +45,14 @@ const Meme: React.FC = () => {
   
     fetchMemes();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (uploadedImageUrl) {
+        URL.revokeObjectURL(uploadedImageUrl);
+      }
+    };
+  }, [uploadedImageUrl]);
 
   const memeRef = useRef<HTMLDivElement>(null);
 
@@ -59,8 +70,22 @@ const Meme: React.FC = () => {
     };
 
   const getMemeImage = () => {
+    if (allMemes.length === 0) return;
+
     const randomIndex: number = Math.floor(Math.random() * allMemes.length);
     const url: string = allMemes[randomIndex].url;
+    setUploadedImageUrl(null);
+    setMeme((prevMeme) => ({ ...prevMeme, memeImageUrl: url }));
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file || !file.type.startsWith("image/")) return;
+
+    const url = URL.createObjectURL(file);
+    setUploadedImageUrl(url);
     setMeme((prevMeme) => ({ ...prevMeme, memeImageUrl: url }));
   };
 
@@ -85,10 +110,28 @@ const Meme: React.FC = () => {
         </div>
         <Button
           onClick={getMemeImage}
-          className="col-span-2 bg-[#A818DA] hover:bg-[#711F8D] font-bold text-white text-base"
+          disabled={allMemes.length === 0}
+          className="bg-[#A818DA] hover:bg-[#711F8D] font-bold text-white text-base"
         >
-          Get a new meme image
+          Get a random image
         </Button>
+        <Button
+          type="button"
+          onClick={() => imageInputRef.current?.click()}
+          variant="outline"
+          className="font-bold text-base"
+        >
+          <Upload aria-hidden="true" className="mr-2 h-4 w-4" />
+          Upload image
+        </Button>
+        <input
+          ref={imageInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="hidden"
+          aria-label="Choose an image to use in your meme"
+        />
       </div>
       <div
         className="w-full sm:w-[30rem] relative flex justify-center"
