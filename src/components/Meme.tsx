@@ -27,6 +27,7 @@ interface Meme {
 }
 
 type CaptionKey = "topText" | "bottomText";
+type CaptionTarget = CaptionKey | "both";
 
 const defaultCaptionStyle: CaptionStyle = {
   sideMargin: 8,
@@ -58,7 +59,7 @@ const Meme: React.FC = () => {
     topText: { ...defaultCaptionStyle },
     bottomText: { ...defaultCaptionStyle },
   });
-  const [activeCaption, setActiveCaption] = useState<CaptionKey>("bottomText");
+  const [activeCaption, setActiveCaption] = useState<CaptionTarget>("bottomText");
   const [stickers, setStickers] = useState<MemeSticker[]>([]);
   const [stickerText, setStickerText] = useState("");
   const nextStickerId = useRef(0);
@@ -95,13 +96,24 @@ const Meme: React.FC = () => {
   }, [uploadedVideoUrl]);
 
   const memeRef = useRef<HTMLDivElement>(null);
-  const activeCaptionStyle = captionStyles[activeCaption];
+  const activeCaptionStyle = captionStyles[
+    activeCaption === "both" ? "topText" : activeCaption
+  ];
 
   const updateCaptionStyle = (update: Partial<CaptionStyle>) => {
-    setCaptionStyles((previous) => ({
-      ...previous,
-      [activeCaption]: { ...previous[activeCaption], ...update },
-    }));
+    setCaptionStyles((previous) => {
+      if (activeCaption === "both") {
+        return {
+          topText: { ...previous.topText, ...update },
+          bottomText: { ...previous.bottomText, ...update },
+        };
+      }
+
+      return {
+        ...previous,
+        [activeCaption]: { ...previous[activeCaption], ...update },
+      };
+    });
   };
 
   const handleTextChange =
@@ -313,11 +325,12 @@ const Meme: React.FC = () => {
             <select
               id="caption-target"
               value={activeCaption}
-              onChange={(event) => setActiveCaption(event.target.value as CaptionKey)}
+              onChange={(event) => setActiveCaption(event.target.value as CaptionTarget)}
               className="h-10 rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <option value="topText">Top caption</option>
               <option value="bottomText">Bottom caption</option>
+              <option value="both">Both captions</option>
             </select>
           </div>
         </div>
