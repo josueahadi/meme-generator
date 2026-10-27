@@ -3,6 +3,57 @@
   src: url("https://fonts.cdnfonts.com/s/17418/Impact.woff") format("woff");
 }
 
+.editor-layout {
+  display: grid;
+  grid-template-areas:
+    "preview"
+    "source"
+    "caption"
+    "stickers";
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.editor-source {
+  grid-area: source;
+}
+
+.editor-caption {
+  grid-area: caption;
+}
+
+.editor-stickers {
+  grid-area: stickers;
+}
+
+.editor-preview {
+  grid-area: preview;
+  min-width: 0;
+  width: 100%;
+}
+
+.meme-preview-canvas {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-height: 50svh;
+  justify-content: center;
+  overflow: hidden;
+  background: #111827;
+}
+
+.meme-preview-canvas > img,
+.meme-preview-canvas > video {
+  display: block;
+  width: 100%;
+  max-height: 50svh;
+  object-fit: contain;
+}
+
 .impact-font {
   font-family: "Impact", sans-serif;
 }
@@ -10,4 +61,76 @@
 .text-stroke {
   text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
     2px 2px 0 #000;
+}
+
+.meme-sticker {
+  position: absolute;
+  z-index: 20;
+  display: inline-flex;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  touch-action: none;
+}
+
+.meme-sticker:active {
+  cursor: grabbing;
+}
+
+.meme-sticker > span {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+    2px 2px 0 #000;
+}
+
+.meme-sticker-remove {
+  position: absolute;
+  top: -0.65rem;
+  right: -0.65rem;
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  place-items: center;
+  border: 1px solid white;
+  border-radius: 9999px;
+  background: #1f2937;
+  color: white;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0;
+}
+
+.meme-sticker:hover .meme-sticker-remove,
+.meme-sticker:focus-within .meme-sticker-remove {
+  opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  .editor-layout {
+    grid-template-areas:
+      "source preview"
+      "caption preview"
+      "stickers preview";
+    grid-template-columns: minmax(0, 1fr) minmax(28rem, 1.05fr);
+    align-items: start;
+    column-gap: 2.5rem;
+    padding: 2rem;
+  }
+
+  .editor-preview {
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .meme-preview-canvas {
+    max-height: calc(100vh - 10rem);
+  }
+
+  .meme-preview-canvas > img,
+  .meme-preview-canvas > video {
+    max-height: calc(100vh - 10rem);
+  }
 }
