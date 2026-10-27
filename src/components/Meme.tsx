@@ -396,8 +396,8 @@ const Meme: React.FC = () => {
         </div>
       </section>
 
-      <section className="editor-stickers w-full" aria-label="Sticker creator">
-        <h2 className="mb-3 text-base font-semibold">Create stickers</h2>
+      <section className="editor-stickers w-full" aria-label="Movable text and emoji">
+        <h2 className="mb-3 text-base font-semibold">Movable text &amp; emoji</h2>
         <form
           className="flex flex-col gap-2 sm:flex-row"
           onSubmit={(event) => {
@@ -408,22 +408,22 @@ const Meme: React.FC = () => {
           <Input
             value={stickerText}
             onChange={(event) => setStickerText(event.target.value)}
-            placeholder="Type text or an emoji"
-            aria-label="Sticker text"
+            placeholder="Text or emoji to place on the image"
+            aria-label="Movable text or emoji"
             maxLength={32}
           />
           <Button type="submit" disabled={!stickerText.trim()} className="bg-[#A818DA] font-bold text-white hover:bg-[#711F8D]">
-            Add sticker
+            Add to image
           </Button>
         </form>
-        <div className="mt-3 flex flex-wrap gap-2" aria-label="Quick stickers">
+        <div className="mt-3 flex flex-wrap gap-2" aria-label="Quick emoji overlays">
           {["😂", "🔥", "❤️", "✨", "💯"].map((sticker) => (
             <Button
               key={sticker}
               type="button"
               variant="outline"
               size="icon"
-              aria-label={`Add ${sticker} sticker`}
+              aria-label={`Add ${sticker} to image`}
               onClick={() => addSticker(sticker)}
             >
               <span aria-hidden="true">{sticker}</span>
